@@ -16,15 +16,15 @@ column_code <- list(
 	},
 	detection_date = function(date) {
 		require(lubridate)
-		detection_date <- parse_date_time(x=date, orders='mdyhms')
+		detection_date <- parse_date_time(x=date, orders=date.format)
 		detection_date[detection_date > now()] <- 
 			detection_date[detection_date > now()] - years(100)
 		return(detection_date)
 	},
-#	season_number =  function(detection_date) {
-#		season <- day_of_year_to_season(yday(detection_date), output='season_number')
-#		return(season)
-#	},
+	season_number =  function(detection_date) {
+		season <- day_of_year_to_season(yday(detection_date), output='season_number')
+		return(season)
+	},
 	river = function(river) return(river),
 	area = function(area) return(area),
 	section = function(section) return(section),

@@ -20,7 +20,8 @@ names(ed) <- tolower(names(ed))
 name_map <- list(
 	temperature = 'avg daily temp',  
 	temperature_source = 'temp source',
-	discharge_source = 'discharge source'
+	discharge_source = 'discharge source',
+  discharge = 'avg daily discharge'
 )
 
 colnames(ed) <- map(x=colnames(ed), map=name_map)
@@ -34,7 +35,7 @@ keep <- c(
 
 ed <- ed[,keep]
 
-ed[['date_ct']] <- parse_date_time(x=ed[['date']], orders=c('mdyhms')) 
+ed[['date_ct']] <- parse_date_time(x=ed[['date']], orders=date.format) 
 bad <- ed[['date_ct']] > now()
 ed[['date_ct']][bad] <- ed[['date_ct']][bad] - years(100)
 ed[['temperature']] <- as.numeric(ed[['temperature']])

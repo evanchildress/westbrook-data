@@ -4,8 +4,8 @@ stmt <- paste0(
 sampling <- dbGetQuery(link$conn, stmt)
 sampling[['order']] <- as.numeric(sampling$sample_name)
 
-sampling[['start_date']] <- suppressWarnings(parse_date_time(NA, orders='mdyhms'))
-sampling[['end_date']] <- suppressWarnings(parse_date_time(NA, orders='mdyhms'))
+sampling[['start_date']] <- suppressWarnings(parse_date_time(NA, orders=date.format))
+sampling[['end_date']] <- suppressWarnings(parse_date_time(NA, orders=date.format))
 
 sampling[['seasonal']] <- FALSE
 sampling[['seasonal']][sampling[['sample_name']] %in%  
@@ -22,7 +22,11 @@ sampling[['seasonal']][sampling[['sample_name']] %in%
 		 "60", "61", "62", "63", 
 		 "64", "65", "66", "67", 
 		 "68", "69", "70", "71", 
-		 "72", "73", "74", "75") ] <- TRUE
+		 "72", "73", "74", "75",
+     "76", "77", "78", "79",
+     "80", "81", "82", "83",
+     "84", "85", "86", "87",
+     "88", "89", "90", "91") ] <- TRUE
 
 for (i in 1:nrow(sampling)) {
 	stmt <- paste0(
@@ -31,7 +35,7 @@ for (i in 1:nrow(sampling)) {
 	)
 	### FUCKING DATE PARSING!
 	date <- strsplit(x=dbGetQuery(link$conn,stmt)[['date']],"/")
-	detection_date <- parse_date_time(x=date, orders='mdyhms') 
+	detection_date <- parse_date_time(x=date, orders=date.format) 
 	detection_date[detection_date > now()] <- 
 		detection_date[detection_date > now()] - years(100)
 	sampling[i,'start_date'] <- min(detection_date, na.rm=TRUE)
@@ -55,19 +59,16 @@ sample_number_map <- c(
 	"48" = 37, "49" = 38, 								"50" = 39, "51" = 40,
 	"52" = 41, "53" = 42, 								"54" = 43, "55" = 44,
 	"56" = 45, "57" = 46, 								"58" = 47, "59" = 48,
-	"60" = 49, "61" = 50, 								"62" = 51, "63" = 52,
+	"60" = 49, "61" = 50, 		  					"62" = 51, "63" = 52,
 	"64" = 53, "65" = 54, 								"66" = 55, "67" = 56,
-	"68" = 57, "69" = 58, 								"70" = 59
+	"68" = 57, "69" = 58, 								"70" = 59, "71" = 60,
+  "72" = 61, "73" = 62,                 "74" = 63, "75" = 64,
+  "76" = 65, "77" = 66,                 "78" = 67, "79" = 68,
+  "80" = 69, "81" = 70,                 "82" = 71, "83" = 72,
+  "84" = 73, "85" = 74,                 "86" = 75, "87" = 76,
+  "88" = 77, "89" = 78,                 "90" = 79, "91" = 80
 )
 sample_number_map <- as.list(sample_number_map)
-
-#	"71",
-#	
-#	"72",
-#	"73",
-#	"74",
-#	"75")
-
 
 sampling[['sample_number']] <- NA
 for ( i in 1:nrow(sampling)) {
