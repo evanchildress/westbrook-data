@@ -3,7 +3,7 @@ id_tables <- split(x=id_table, f=id_table[['tag']])
 tags <- names(id_tables)
 
 sample_points <- readRDS(file=file.path(processed_data_dir,'sample_points.rds'))
-sampling <- dbGetQuery(link$conn, "SELECT * FROM data_sampling;")
+sampling <- dbGetQuery(link$conn, "SELECT * FROM data_sampling ORDER BY sample_number;")
 
 tag_history <- dbGetQuery(link$conn, "SELECT * FROM data_corrected_tag_history;")
 
@@ -19,9 +19,9 @@ sampling_rows <- mcmapply(
 		)
 		nr <- length(rows)
 		if (nr == 0) return(NULL)
-		day_diff <- days(sampling[rows,'end_date'] - sampling[rows,'start_date'])
+		day_diff <- difftime(sampling[rows,'end_date'], sampling[rows,'start_date'],units = 'days')
 		class(day_diff) <- "numeric"
-		day_diff <- days(round(day_diff*runif(nr,0,1)))
+		day_diff <- days(round(day_diff*runif(nr,0,1))) 
 		imputed_date <- sampling[rows,'start_date'] + day_diff
 		o <- data.frame(
 			tag = tag,

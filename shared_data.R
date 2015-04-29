@@ -30,10 +30,10 @@ shared_data <- local(expr={
 		"tags_salmon_wb", "tags_trout_wb", "tags_tribs_wb"
 	)
 
-	csv_files <- paste(file.path(adjusted_data_dir, tag_data_names), '.csv', sep='')
-	names(csv_files) <- tag_data_names
-	standardize_files <- paste(file.path(adjusted_data_dir, tag_data_names), '_standardize.R', sep='')
-	names(standardize_files) <- tag_data_names
+	csv_files <- paste(file.path(adjusted_data_dir, c(tag_data_names,"yoy_bins")), '.csv', sep='')
+	names(csv_files) <- c(tag_data_names,"yoy_bins")
+	standardize_files <- paste(file.path(adjusted_data_dir, c(tag_data_names,"yoy_bins")), '_standardize.R', sep='')
+	names(standardize_files) <- c(tag_data_names,"yoy_bins")
 
 
 	return(environment(NULL)) 

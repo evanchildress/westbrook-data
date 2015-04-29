@@ -1,4 +1,3 @@
-
 do <- list(
 	import_stage = c(
 		"import_to_sql.R",
@@ -45,7 +44,7 @@ do <- list(
 		"form_state_table.R"
 	)
 )
-	
+source('batch_rbind.R')	
 source('shared_data.R')
 for (stage in names(do)) {
 	for (script in do[[stage]]) {

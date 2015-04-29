@@ -39,6 +39,7 @@ day_of_year_to_season <- function(day, output='season_name') {
 	}
 }
 assign(x='map', value=season_map)
+assign('day_of_year_to_season',day_of_year_to_season,envir=shared_data)
 
 day_count <- aggregate(
 	formula = duration ~ season_name + season_number,

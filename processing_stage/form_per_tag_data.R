@@ -49,6 +49,7 @@ per_id_function <- function(id_history, cohort_table) {
 			} else {
 				cohort_max <- year(first_capture) - 1
 			}
+      
 
 			return(data.frame(
 				tag = tag,
